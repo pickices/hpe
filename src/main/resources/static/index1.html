@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .pic{
+            width: 1100px;
+            height: 500px;
+            border: 1px solid black;
+            background-color: #eee;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+        .pic img{
+            width: 500px;
+            height: 500px;
+            border: 1px solid black;
+        }
+        .btn{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="pic">
+            <img class="up" :src="imageUrl" alt="">
+            <img class="show" :src="showUrl" alt="">
+        </div>
+        <div class="btn">
+            <!-- <input v-show="false" ref="fileRef" type="file" @change="fileChange">
+            <button @click="uploadFile">上传</button> -->
+            <el-upload
+                class="upload-demo"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :on-success="handleAvatarSuccess"
+                multiple
+                :limit="1">
+                <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
+            <el-button @click='btnClick'>后端上传</el-button>
+        </div>
+    </div>
+
+    <script src="./vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script>
+        // import axios from 'axios'
+        const app = new Vue({
+            el: '#app',
+            data: {
+                imageUrl: '',
+                showUrl: ''
+            },
+            methods: {
+                handleAvatarSuccess(res, file) {
+                    // 本地文件夹上传路径
+                    this.imageUrl = URL.createObjectURL(file.raw);
+                    var formData = new FormData()
+                    formData.append('file',this.imageUrl)
+                    axios.post('/estimation/upload',this.imageUrl).then(res=>{
+                        alert('上传成功')
+                    })
+                },
+                btnClick(){
+                    axios.get('/estimation/exec').then(res => {
+                        if(res.status == 200){
+                            // 后端上传的图片路径
+                            this.showUrl = res.data
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>
