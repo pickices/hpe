@@ -1,5 +1,6 @@
 package com.liuxinchi.hpe.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.liuxinchi.hpe.common.ApiRestResponse;
 import com.liuxinchi.hpe.common.Constant;
 import com.liuxinchi.hpe.exception.HpeException;
@@ -23,6 +24,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -252,5 +255,12 @@ public class ImageController {
             throw new HpeException(HpeExceptionEnum.NEED_RECONSTRUCT);
         }
         DownloadUtil.downloadByURL(image.getMesh(),response,uuid.toString());
+    }
+
+    @ResponseBody
+    @GetMapping("/listall")
+    public ApiRestResponse listAll(Integer pageNum, Integer pageSize){
+        PageInfo pageInfo = imageService.selectAll(pageNum, pageSize);
+        return ApiRestResponse.success(pageInfo);
     }
 }

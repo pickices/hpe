@@ -20,7 +20,7 @@ mybatis:
 
 file:
   upload:
-    dir: /home/liuxinchi/hpe/upload/
+    dir: E:\Download
     ip: 127.0.0.1
 
 ssh:

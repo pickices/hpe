@@ -119,5 +119,10 @@
         where image_name = #{imageName,jdbcType=VARCHAR}
     </select>
 
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from hpe_image
+    </select>
+
 
 </mapper>

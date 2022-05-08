@@ -4,6 +4,8 @@ import com.liuxinchi.hpe.model.pojo.Image;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface ImageMapper {
@@ -15,4 +17,6 @@ public interface ImageMapper {
     int insertSelective(Image image);
 
     int updateByNameSelective(Image image);
+
+    List<Image> selectAll();
 }
